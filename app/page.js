@@ -65,60 +65,75 @@ const ScrollArrow = ({ targetId, bgColor = 'bg-red-700' }) => (
 );
 
 // Componente do Cabeçalho/Navegação
-const Navbar = () => (
-    <header className="sticky top-0 z-50 bg-blue-950 shadow-lg">
-      <div className="container mx-auto max-w-6xl px-6 flex justify-center items-center h-20 relative text-white">
+// Componente do Cabeçalho/Navegação
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
 
-        {/* Logo Central Flutuante (Desktop) */}
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 z-10">
-          <a href="#">
-            <Image
-                src="/gallery/logo-top.png"
-                alt="Logo Store Motopeças"
-                width={250}
-                height={144}
-                className="filter drop-shadow-lg"
-            />
-          </a>
-        </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
 
-        {/* Navegação (Desktop) */}
-        <nav className="hidden md:flex w-full items-center justify-center">
-          <div className="flex items-center space-x-8">
-            <a href="#servicos" className="hover:text-red-500 transition-colors duration-300">Serviços</a>
-            <a href="#diferenciais" className="hover:text-red-500 transition-colors duration-300">Diferenciais</a>
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+      <header className={`sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'bg-blue-950 shadow-lg' : 'bg-blue-950 shadow-lg'}`}>
+        <div className="container mx-auto max-w-6xl px-6 flex justify-center items-center h-20 relative text-white">
+
+          {/* Logo Central Flutuante (Desktop) */}
+          <div className={`hidden md:block absolute left-1/2 -translate-x-1/2 z-10 transition-all duration-300 ease-in-out ${scrolled ? 'top-1 w-24' : 'top-0 w-[250px]'}`}>
+            <a href="#">
+              <Image
+                  src="/gallery/logo-top.png"
+                  alt="Logo Store Motopeças"
+                  width={250}
+                  height={144}
+                  className="filter drop-shadow-lg"
+              />
+            </a>
           </div>
-          <div className="w-72"></div> {/* Espaço para a logo */}
-          <div className="flex items-center space-x-8">
-            <a href="#galeria" className="hover:text-red-500 transition-colors duration-300">Galeria</a>
-            <a href="#contato" className="hover:text-red-500 transition-colors duration-300">Contato</a>
+
+          {/* Navegação (Desktop) */}
+          <nav className="hidden md:flex w-full items-center justify-center">
+            <div className="flex items-center space-x-8">
+              <a href="#servicos" className="hover:text-red-500 transition-colors duration-300">Serviços</a>
+              <a href="#diferenciais" className="hover:text-red-500 transition-colors duration-300">Diferenciais</a>
+            </div>
+            <div className="w-[280px]"></div> {/* Espaço para a logo */}
+            <div className="flex items-center space-x-8">
+              <a href="#galeria" className="hover:text-red-500 transition-colors duration-300">Galeria</a>
+              <a href="#contato" className="hover:text-red-500 transition-colors duration-300">Contato</a>
+            </div>
+          </nav>
+
+          {/* Botão WhatsApp (Desktop) - Posicionado absolutamente */}
+          <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
+            <a
+                href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105"
+            >
+              WhatsApp
+            </a>
           </div>
-        </nav>
 
-        {/* Botão WhatsApp (Desktop) - Posicionado absolutamente */}
-        <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
-          <a
-              href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105"
-          >
-            WhatsApp
-          </a>
+          {/* Mobile view */}
+          <div className={`md:hidden flex justify-between w-full items-center transition-colors duration-300 ${scrolled ? '' : 'bg-blue-950 bg-opacity-80 p-2 rounded-lg'}`}>
+            <a href="#">
+              <Image src="/gallery/logo-top.png" width={80} height={80} alt="Logo Store Motopeças" />
+            </a>
+            <a href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`} target="_blank" rel="noopener noreferrer" className="bg-green-600 p-2 rounded-full">
+              <Phone className="text-white h-5 w-5" />
+            </a>
+          </div>
         </div>
+      </header>
+  );
+};
 
-        {/* Mobile view */}
-        <div className="md:hidden flex justify-between w-full items-center">
-          <a href="#">
-            <Image src="/gallery/logo-top.png" width={80} height={80} alt="Logo Store Motopeças" />
-          </a>
-          <a href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`} target="_blank" rel="noopener noreferrer" className="bg-green-600 p-2 rounded-full">
-            <Phone className="text-white h-5 w-5" />
-          </a>
-        </div>
-      </div>
-    </header>
-);
 
 // Componente da Seção Herói (Principal)
 const Hero = () => (
