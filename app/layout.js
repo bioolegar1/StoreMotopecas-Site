@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
     title: "Store Motopeças",
     description: "Oficina especializada em motos de todas as cilindradas.",
+    icons: {
+        icon: '/store-motopeças-logo.png',
+    },
 };
 
 // app/layout.js
