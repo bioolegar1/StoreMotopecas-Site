@@ -9,7 +9,7 @@ export const metadata = {
     title: "Store Motopeças",
     description: "Oficina especializada em motos de todas as cilindradas.",
     icons: {
-        icon: '/store-motopeças-logo.ico',
+        icon: '/gallery/store-motopeças-logo.ico',
     },
 };
 
