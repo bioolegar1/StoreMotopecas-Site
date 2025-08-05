@@ -58,13 +58,12 @@ const ScrollArrow = ({ targetId, bgColor = 'bg-red-700' }) => (
     <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 z-20">
       <a href={`#${targetId}`} aria-label={`Rolar para a seção ${targetId}`}>
         <div className={`${bgColor} p-3 rounded-full shadow-lg animate-bounce`}>
-          <ChevronDown className="h-6 w-6 text-shadow-white" />
+          <ChevronDown className="h-6 w-6 text-white" />
         </div>
       </a>
     </div>
 );
 
-// Componente do Cabeçalho/Navegação
 // Componente do Cabeçalho/Navegação
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -79,7 +78,7 @@ const Navbar = () => {
   }, []);
 
   return (
-      <header className={`sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'bg-blue-950 shadow-lg' : 'bg-blue-950 shadow-lg'}`}>
+      <header className={`sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'bg-blue-950 shadow-lg' : 'bg-red-900'}`}>
         <div className="container mx-auto max-w-6xl px-6 flex justify-center items-center h-20 relative text-white">
 
           {/* Logo Central Flutuante (Desktop) */}
@@ -137,11 +136,11 @@ const Navbar = () => {
 
 // Componente da Seção Herói (Principal)
 const Hero = () => (
-    <div className="bg-blue-950 py-7 sm:py-11 relative">
+    <div className="bg-blue-950 pt-10 pb-7 sm:pb-11 relative">
       <section className="container mx-auto max-w-6xl grid md:grid-cols-2">
         <div className="w-full rounded-lg overflow-hidden">
           <Image
-              src="/oficina.jpg"
+              src="/oficina.png"
               alt="Frente da oficina Store Motopeças"
               width={960}
               height={720}
@@ -263,7 +262,7 @@ const Gallery = () => {
         <section id="galeria" className="pt-28 pb-20 bg-gray-100">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Nossa Qualidade em Imagens</h2>
+              <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Qualidade Garantida!</h2>
               <p className="text-gray-600 mt-2">Confira alguns dos nossos trabalhos e nossa estrutura.</p>
               <div className="w-24 h-1 bg-red-500 mx-auto mt-4"></div>
             </div>
@@ -280,7 +279,7 @@ const Gallery = () => {
             </div>
           </div>
         </section>
-        <ScrollArrow targetId="localizacao" bgColor="bg-red-700" />
+        <ScrollArrow targetId="contato" bgColor="bg-red-700" />
       </div>
   );
 };
@@ -288,10 +287,10 @@ const Gallery = () => {
 
 // Componente da Seção de Localização e Contato
 const Location = () => (
-    <section id="localizacao" className="pt-28 pb-20 bg-white">
+    <section id="contato" className="pt-28 pb-20 bg-white">
       <div className="container mx-auto max-w-6xl px-6">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Venha nos Visitar</h2>
+          <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Venha conhecer nossa oficina</h2>
           <p className="text-gray-600 mt-2">Estamos prontos para te receber!</p>
           <div className="w-24 h-1 bg-red-500 mx-auto mt-4"></div>
         </div>
@@ -359,7 +358,7 @@ const Footer = () => {
         <div className="container mx-auto max-w-6xl px-6 text-center">
           <p>&copy; {currentYear} {DADOS_OFICINA.nome}. Todos os direitos reservados.</p>
           <p className="text-sm mt-2">
-            Desenvolvido com ❤️ por um Web Designer Profissional
+            Desenvolvido por:  <a className="hover: text-red-500" href='{https://www.linkedin.com/in/vandersonhsantos/}'>BioOlegari</a>
           </p>
         </div>
       </footer>
