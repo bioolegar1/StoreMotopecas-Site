@@ -113,9 +113,16 @@ const Navbar = () => {
                 href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-lg transition-transform duration-300 hover:scale-105 inline-flex items-center justify-center"
             >
-              WhatsApp
+              <Image
+                  src="/gallery/WhatsApp.png"
+                  alt="WhatsApp Icon"
+                  width={24}
+                  height={24}
+                  className="mr-3"
+              />
+              <span>Whatsapp</span>
             </a>
           </div>
 
@@ -170,9 +177,16 @@ const Hero = () => (
                 href={`https://api.whatsapp.com/send?phone=${DADOS_OFICINA.whatsapp}&text=${encodeURIComponent(DADOS_OFICINA.mensagemWhatsapp)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg uppercase transition-transform duration-300 hover:scale-105 inline-flex items-center justify-center"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform duration-300 hover:scale-105 inline-flex items-center justify-center"
             >
-              Agendar Revisão pelo WhatsApp <ArrowRight className="ml-2" />
+              <Image
+                  src="/gallery/WhatsApp.png"
+                  alt="WhatsApp Icon"
+                  width={40}
+                  height={40}
+                  className="mr-3 shadow-2xs"
+              />
+              <span>(62) 99223-3968</span>
             </a>
           </div>
         </div>
@@ -184,7 +198,7 @@ const Hero = () => (
 // Componente da Seção de Serviços
 const Services = () => (
     <div className="relative">
-      <section id="servicos" className="pt-28 pb-20 bg-gray-100">
+      <section id="servicos" className="pt-28 pb-20 bg-gray-200">
         <div className="container mx-auto max-w-6xl px-6">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-blue-950">Nossos Principais Serviços</h2>
@@ -194,7 +208,7 @@ const Services = () => (
           {/* Visualização para Desktop */}
           <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {SERVICOS.map((service, index) => (
-                <div key={index} className="bg-white p-8 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                <div key={index} className="bg-white p-8 rounded-lg shadow-lg text-center transform hover:-translate-y-3 bg-red-400 transition-transform duration-300">
                   <div className="flex justify-center mb-4">
                     {service.icone}
                   </div>
@@ -259,7 +273,7 @@ const Gallery = () => {
 
   return (
       <div className="relative">
-        <section id="galeria" className="pt-28 pb-20 bg-gray-100">
+        <section id="galeria" className="pt-28 pb-20 bg-gray-200">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Qualidade Garantida!</h2>
@@ -294,7 +308,7 @@ const Location = () => (
           <p className="text-gray-600 mt-2">Estamos prontos para te receber!</p>
           <div className="w-24 h-1 bg-red-500 mx-auto mt-4"></div>
         </div>
-        <div className="flex flex-col lg:flex-row gap-8 bg-gray-50 p-8 rounded-lg shadow-xl">
+        <div className="flex flex-col lg:flex-row gap-8 bg-gray-200 p-8 rounded-lg shadow-xl">
           <div className="lg:w-1/2">
             <h3 className="text-2xl font-bold text-blue-950 mb-4">Nossa Localização</h3>
             <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
