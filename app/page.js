@@ -144,7 +144,7 @@ const Navbar = () => {
 // Componente da Seção Herói (Principal)
 const Hero = () => (
     <div className="bg-blue-950 pt-10 pb-7 sm:pb-11 relative">
-      <section className="container mx-auto max-w-6xl grid md:grid-cols-2">
+      <section className="container mx-auto max-w-7xl grid md:grid-cols-2">
         <div className="w-full rounded-lg overflow-hidden">
           <Image
               src="/oficina.png"
@@ -264,6 +264,7 @@ const Differentiators = () => (
     </div>
 );
 
+
 // Componente da Galeria de Fotos
 const Gallery = () => {
   const images = [
@@ -271,22 +272,70 @@ const Gallery = () => {
     'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.webp',
   ];
 
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false); // Novo estado para controlar animação
+
+  // Effect para detectar scroll e fechar lightbox
+  useEffect(() => {
+    const handleScroll = () => {
+      if (lightboxOpen) {
+        closeLightbox();
+      }
+    };
+
+    // Se lightbox estiver aberto, adiciona o listener
+    if (lightboxOpen) {
+      window.addEventListener('scroll', handleScroll);
+    }
+
+    // Cleanup: remove o listener quando componente desmonta ou lightbox fecha
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lightboxOpen]); // Executa sempre que lightboxOpen mudar
+
+  const openLightbox = (index) => {
+    setCurrentImage(index);
+    setLightboxOpen(true);
+    // Pequeno delay para garantir que a lightbox renderize antes da animação
+    setTimeout(() => setIsAnimating(true), 10);
+  };
+
+  const closeLightbox = () => {
+    setIsAnimating(false); // Inicia animação de saída
+    // Aguarda a animação terminar antes de fechar
+    setTimeout(() => {
+      setLightboxOpen(false);
+    }, 300); // 300ms = duração da animação
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
   return (
       <div className="relative">
-        <section id="galeria" className="pt-28 pb-20 bg-gray-200">
+        <section id="galeria" className="pt-28 pb-20 bg-gray-100">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Qualidade Garantida!</h2>
+              <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Nossa Qualidade em Imagens</h2>
               <p className="text-gray-600 mt-2">Confira alguns dos nossos trabalhos e nossa estrutura.</p>
               <div className="w-24 h-1 bg-red-500 mx-auto mt-4"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {images.map((image, index) => (
-                  <div key={index} className="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1">
+                  <div key={index} className="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1 cursor-pointer" onClick={() => openLightbox(index)}>
                     <img
                         src={`/gallery/${image}`}
                         alt={`Trabalho realizado ${index + 1}`}
-                        className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500 cursor-pointer"
+                        className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                     />
                   </div>
               ))}
@@ -294,6 +343,91 @@ const Gallery = () => {
           </div>
         </section>
         <ScrollArrow targetId="contato" bgColor="bg-red-700" />
+
+        {lightboxOpen && (
+            <div
+                className={`fixed inset-0 flex items-center justify-center z-50 transition-all duration-300 ${
+                    isAnimating ? 'bg-opacity-80 opacity-100' : 'bg-opacity-0 opacity-0'
+                }`}
+                onClick={closeLightbox}
+            >
+              {/* Botão fechar com animação responsiva */}
+              <button
+                  onClick={closeLightbox}
+                  className={`absolute top-2 right-2 sm:top-4 sm:right-4 text-white z-50 
+                          w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 
+                          bg-black bg-opacity-50 rounded-full 
+                          flex items-center justify-center
+                          hover:bg-opacity-70 active:scale-95
+                          transition-all duration-300 ${
+                      isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                  }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+
+              {/* Botão anterior com animação responsiva */}
+              <button
+                  onClick={showPrev}
+                  className={`absolute left-2 top-1/2 transform -translate-y-1/2 sm:left-4 
+                          text-white z-50 bg-black bg-opacity-50 rounded-full 
+                          w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14
+                          flex items-center justify-center
+                          hover:bg-opacity-70 active:scale-95
+                          transition-all duration-300 ${
+                      isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                  }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              {/* Botão próximo com animação responsiva */}
+              <button
+                  onClick={showNext}
+                  className={`absolute right-2 top-1/2 transform -translate-y-1/2 sm:right-4 
+                          text-white z-50 bg-black bg-opacity-50 rounded-full 
+                          w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14
+                          flex items-center justify-center
+                          hover:bg-opacity-70 active:scale-95
+                          transition-all duration-300 ${
+                      isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                  }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+
+              {/* Container da imagem com animação */}
+              <div
+                  className={`relative w-11/12 h-5/6 md:w-3/4 md:h-3/4 transition-all duration-300 ${
+                      isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                  }`}
+                  onClick={(e) => e.stopPropagation()}
+              >
+                <Image
+                    src={`/gallery/${images[currentImage]}`}
+                    alt={`Imagem ${currentImage + 1}`}
+                    layout="fill"
+                    objectFit="contain"
+                />
+              </div>
+            </div>
+        )}
       </div>
   );
 };
@@ -372,7 +506,12 @@ const Footer = () => {
         <div className="container mx-auto max-w-6xl px-6 text-center">
           <p>&copy; {currentYear} {DADOS_OFICINA.nome}. Todos os direitos reservados.</p>
           <p className="text-sm mt-2">
-            Desenvolvido por:  <a className="hover: text-red-500" href='{https://www.linkedin.com/in/vandersonhsantos/}'>BioOlegari</a>
+            Desenvolvido por: <a
+              className="text-red-500 hover:text-cyan-300 scale-200 transition-all duration-300"
+              href="https://www.linkedin.com/in/vandersonhsantos/"
+          >
+            BioOlegari
+          </a>
           </p>
         </div>
       </footer>
