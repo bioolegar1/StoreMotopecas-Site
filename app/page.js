@@ -438,18 +438,16 @@ const Location = () => (
     <section id="contato" className="pt-28 pb-20 bg-white">
       <div className="container mx-auto max-w-6xl px-6">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Venha conhecer nossa oficina</h2>
+          <h2 className="text-4xl font-bold text-blue-950 hidden md:block">Venha nos Visitar</h2>
           <p className="text-gray-600 mt-2">Estamos prontos para te receber!</p>
           <div className="w-24 h-1 bg-red-500 mx-auto mt-4"></div>
         </div>
-        <div className="flex flex-col lg:flex-row gap-8 bg-gray-200 p-8 rounded-lg shadow-xl">
-          <div className="lg:w-1/2">
-            <h3 className="text-2xl font-bold text-blue-950 mb-4">Nossa Localização</h3>
-            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-8 bg-gray-50 p-8 rounded-lg shadow-xl">
+          <div className="lg:w-1/2 flex flex-col">
+            <div className="flex-grow rounded-lg overflow-hidden min-h-[400px]">
               <iframe
                   src={DADOS_OFICINA.googleMapsLink}
-                  width="100%"
-                  height="100%"
+                  className="w-full h-full"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
@@ -492,6 +490,7 @@ const Location = () => (
       </div>
     </section>
 );
+
 
 // Componente do Rodapé
 const Footer = () => {
